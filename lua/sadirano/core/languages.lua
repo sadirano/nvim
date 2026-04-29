@@ -19,9 +19,13 @@ M.core = {
 local always_formatters = {
     xml = { "xmlformat" },
     sql = { "sql_formatter" },
+    json = { "prettier" },
+    jsonc = { "prettier" },
+    yaml = { "prettier" },
+    markdown = { "prettier" },
 }
 
-local always_tools = { "xmlformatter", "sql-formatter" }
+local always_tools = { "xmlformatter", "sql-formatter", "prettier" }
 
 M.profiles = {
     web = {
@@ -34,10 +38,6 @@ M.profiles = {
             typescriptreact = { "prettier" },
             css = { "prettier" },
             html = { "prettier" },
-            json = { "prettier" },
-            jsonc = { "prettier" },
-            yaml = { "prettier" },
-            markdown = { "prettier" },
         },
         linters = {
             javascript = { "eslint_d" },

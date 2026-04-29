@@ -4,15 +4,21 @@ return {
         build = ":TSUpdate",
         config = function()
             local base_parsers = {
-                "json", "sql", "yaml", "markdown",
-                "bash", "lua", "vimdoc", "gitignore",
+                "json",
+                "sql",
+                "yaml",
+                "markdown",
+                "bash",
+                "lua",
+                "vimdoc",
+                "gitignore",
             }
 
             local profile_parsers = {
                 web = { "javascript", "typescript", "html", "css" },
                 rust = { "rust" },
                 python = { "python" },
-                go = { "go" },
+                -- go = { "go" },
             }
 
             local langs = require("sadirano.core.languages")
