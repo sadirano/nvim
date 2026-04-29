@@ -16,6 +16,14 @@ vim.api.nvim_create_autocmd("User", {
     end,
 })
 
+-- make '-' part of word motions only in web/styling filetypes
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "css", "scss", "html", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+    callback = function()
+        vim.opt_local.iskeyword:append("-")
+    end,
+})
+
 -- toggle diagnostics on/off
 local diagnostics_enabled = true
 vim.api.nvim_create_user_command("ToggleDiagnostics", function()

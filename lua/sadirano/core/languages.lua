@@ -30,7 +30,7 @@ local always_tools = { "xmlformatter", "sql-formatter", "prettier" }
 M.profiles = {
     web = {
         lsp = { "ts_ls" },
-        tools = { "ts_ls", "prettier", "eslint_d" },
+        tools = { "ts_ls", "eslint_d" },
         formatters = {
             javascript = { "prettier" },
             typescript = { "prettier" },
@@ -48,8 +48,8 @@ M.profiles = {
     },
     rust = {
         lsp = { "rust_analyzer" },
-        tools = { "rust_analyzer" },
-        formatters = {},
+        tools = { "rust_analyzer", "rustfmt" },
+        formatters = { rust = { "rustfmt" } },
         linters = {},
     },
     python = {

@@ -21,7 +21,7 @@ return {
             local lint = require("lint")
             lint.linters_by_ft = require("sadirano.core.languages").get_linters()
 
-            vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+            vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
                 callback = function()
                     lint.try_lint()
                 end,

@@ -11,8 +11,9 @@ return {
         wk.add({
             { "<leader>f", group = "find" },
             { "<leader>g", group = "git" },
+            { "<leader>h", group = "hunks" },
             { "<leader>l", group = "local" },
-            { "<leader>s", group = "split/search" },
+            { "<leader>s", group = "splits" },
             { "<leader>t", group = "tabs" },
             { "<leader>b", group = "buffer" },
             { "<leader>d", group = "diagnostics" },

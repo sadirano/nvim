@@ -32,8 +32,6 @@ opt.clipboard:append("unnamedplus")
 opt.splitright = true
 opt.splitbelow = true
 
-opt.iskeyword:append("-")
-
 -- persistent undo (no swap/backup files)
 opt.swapfile = false
 opt.backup = false

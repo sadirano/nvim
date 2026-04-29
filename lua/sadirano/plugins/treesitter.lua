@@ -18,7 +18,7 @@ return {
                 web = { "javascript", "typescript", "html", "css" },
                 rust = { "rust" },
                 python = { "python" },
-                -- go = { "go" },
+                go = { "go" },
             }
 
             local langs = require("sadirano.core.languages")
