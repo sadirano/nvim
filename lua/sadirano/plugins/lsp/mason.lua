@@ -17,17 +17,7 @@ return {
         dependencies = { "williamboman/mason.nvim" },
         config = function()
             require("mason-tool-installer").setup({
-                ensure_installed = {
-                    -- LSP servers
-                    "lua_ls",
-                    "rust_analyzer",
-                    "ts_ls",
-                    -- Formatters
-                    "prettier",
-                    "stylua",
-                    -- Linters
-                    "eslint_d",
-                },
+                ensure_installed = require("sadirano.core.languages").get_tools(),
             })
         end,
     },

@@ -56,7 +56,7 @@ return {
             },
         })
 
-        -- Enable servers (nvim-lspconfig provides default cmd/filetypes/root_dir)
-        vim.lsp.enable({ "lua_ls", "rust_analyzer", "ts_ls" })
+        -- Enable servers from active language profiles
+        vim.lsp.enable(require("sadirano.core.languages").get_lsp_servers())
     end,
 }
