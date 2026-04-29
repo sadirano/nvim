@@ -15,6 +15,7 @@ opt.ignorecase = true
 opt.smartcase = true
 
 -- appearance
+opt.showmode = false
 opt.cursorline = true
 opt.termguicolors = true
 opt.background = "dark"

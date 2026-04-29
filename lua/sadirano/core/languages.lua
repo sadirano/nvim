@@ -1,7 +1,12 @@
 local M = {}
 
--- Edit active_profiles to toggle language support on demand
+-- Default profiles — override per-machine in lua/sadirano/local/profiles.lua
 M.active_profiles = { "web" }
+
+local ok, local_profiles = pcall(require, "sadirano.local.profiles")
+if ok and local_profiles.active_profiles then
+    M.active_profiles = local_profiles.active_profiles
+end
 
 -- Core is always active (Lua/Neovim config tooling)
 M.core = {
@@ -13,10 +18,10 @@ M.core = {
 -- Always-on formatters regardless of profile
 local always_formatters = {
     xml = { "xmlformat" },
-    sql = { "sqlfmt" },
+    sql = { "sql_formatter" },
 }
 
-local always_tools = { "xmlformatter", "sqlfmt" }
+local always_tools = { "xmlformatter", "sql-formatter" }
 
 M.profiles = {
     web = {
@@ -51,6 +56,12 @@ M.profiles = {
         lsp = { "pyright" },
         tools = { "pyright", "black" },
         formatters = { python = { "black" } },
+        linters = {},
+    },
+    go = {
+        lsp = { "gopls" },
+        tools = { "gopls", "goimports" },
+        formatters = { go = { "goimports" } },
         linters = {},
     },
 }
