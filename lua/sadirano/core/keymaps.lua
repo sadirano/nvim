@@ -4,97 +4,84 @@ local keymap = vim.keymap
 -- General Keymaps
 ---------------------
 
--- exit insert mode
-keymap.set("i", "jk", "<ESC>")
+keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode" })
 
--- save
-keymap.set("n", "<C-s>", ":w<CR>")
-keymap.set("i", "<C-s>", "<Esc>:w<CR>")
+keymap.set("n", "<C-s>", ":w<CR>", { desc = "Save file" })
+keymap.set("i", "<C-s>", "<Esc>:w<CR>", { desc = "Save file" })
 
--- clear search highlights
-keymap.set("n", "<leader>nh", ":nohl<CR>")
+keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
--- delete single character without copying into register
-keymap.set("n", "x", '"_x')
+keymap.set("n", "x", '"_x', { desc = "Delete char without yanking" })
 
--- increment/decrement numbers
-keymap.set("n", "<leader>+", "<C-a>")
-keymap.set("n", "<leader>-", "<C-x>")
+keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
+keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" })
 
--- jump to line start/end
-keymap.set({ "n", "v" }, "H", "^")
-keymap.set({ "n", "v" }, "L", "$")
+keymap.set({ "n", "v" }, "H", "^", { desc = "Jump to line start" })
+keymap.set({ "n", "v" }, "L", "$", { desc = "Jump to line end" })
 
--- toggle line wrap
-keymap.set("n", "<A-z>", "<cmd>set wrap!<CR>")
+keymap.set("n", "<A-z>", "<cmd>set wrap!<CR>", { desc = "Toggle line wrap" })
 
--- move lines up/down
-keymap.set("n", "<A-Down>", ":m .+1<CR>==", { silent = true })
-keymap.set("n", "<A-Up>", ":m .-2<CR>==", { silent = true })
-keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true })
-keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { silent = true })
+keymap.set("n", "<A-Down>", ":m .+1<CR>==", { silent = true, desc = "Move line down" })
+keymap.set("n", "<A-Up>", ":m .-2<CR>==", { silent = true, desc = "Move line up" })
+keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move selection down" })
+keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move selection up" })
 
--- keep selection after indent
-keymap.set("v", ">", ">gv")
-keymap.set("v", "<", "<gv")
+keymap.set("v", ">", ">gv", { desc = "Indent and keep selection" })
+keymap.set("v", "<", "<gv", { desc = "Unindent and keep selection" })
 
--- copy current file path to clipboard
-keymap.set("n", "cp", '<cmd>let @+ = expand("%")<CR>')
+keymap.set("n", "cp", '<cmd>let @+ = expand("%")<CR>', { desc = "Copy file path" })
 
 -- window navigation
-keymap.set("n", "<C-h>", "<C-w>h")
-keymap.set("n", "<C-j>", "<C-w>j")
-keymap.set("n", "<C-k>", "<C-w>k")
-keymap.set("n", "<C-l>", "<C-w>l")
+keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
+keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to lower window" })
+keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to upper window" })
+keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 
 -- window management
-keymap.set("n", "<leader>sv", "<C-w>v")
-keymap.set("n", "<leader>sh", "<C-w>s")
-keymap.set("n", "<leader>se", "<C-w>=")
-keymap.set("n", "<leader>sx", ":close<CR>")
+keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split vertically" })
+keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split horizontally" })
+keymap.set("n", "<leader>se", "<C-w>=", { desc = "Equalize splits" })
+keymap.set("n", "<leader>sx", ":close<CR>", { desc = "Close split" })
 
 -- tab management
-keymap.set("n", "<leader>to", ":tabnew<CR>")
-keymap.set("n", "<leader>tx", ":tabclose<CR>")
-keymap.set("n", "<leader>tn", ":tabn<CR>")
-keymap.set("n", "<leader>tp", ":tabp<CR>")
+keymap.set("n", "<leader>to", ":tabnew<CR>", { desc = "New tab" })
+keymap.set("n", "<leader>tx", ":tabclose<CR>", { desc = "Close tab" })
+keymap.set("n", "<leader>tn", ":tabn<CR>", { desc = "Next tab" })
+keymap.set("n", "<leader>tp", ":tabp<CR>", { desc = "Prev tab" })
 
 -- buffer navigation
-keymap.set("n", "<C-Tab>", "<cmd>bnext<CR>")
-keymap.set("n", "<S-Tab>", "<cmd>bprev<CR>")
-keymap.set("n", "<leader>bd", "<cmd>bd<CR>")
+keymap.set("n", "<C-Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
+keymap.set("n", "<S-Tab>", "<cmd>bprev<CR>", { desc = "Prev buffer" })
+keymap.set("n", "<leader>bd", "<cmd>bd<CR>", { desc = "Close buffer" })
 
 ----------------------
 -- Plugin Keybinds
 ----------------------
 
--- oil file explorer
-keymap.set("n", "<leader>e", "<cmd>lua require('oil').open_float()<CR>")
+keymap.set("n", "<leader>e", "<cmd>lua require('oil').open_float()<CR>", { desc = "File explorer" })
 
 -- telescope
-keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
-keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>")
-keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>")
-keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>")
-keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>")
-keymap.set("n", "<leader>sg", "<cmd>Telescope live_grep<cr>")
+keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
+keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
+keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Grep word under cursor" })
+keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Buffers" })
+keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Help tags" })
+keymap.set("n", "<leader>sg", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
 
 -- telescope git
-keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>")
-keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<cr>")
-keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>")
-keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>")
+keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", { desc = "Commits" })
+keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<cr>", { desc = "File commits" })
+keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", { desc = "Branches" })
+keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>", { desc = "Status" })
 
--- format current buffer
-keymap.set({ "n", "v" }, "<M-S-f>", "<cmd>lua require('conform').format({ async = true })<CR>")
+keymap.set({ "n", "v" }, "<M-S-f>", "<cmd>lua require('conform').format({ async = true })<CR>", { desc = "Format buffer" })
 
 -- open local files
 keymap.set("n", "<leader>lk", function()
     vim.cmd("edit " .. vim.fn.stdpath("config") .. "/lua/sadirano/local/keymaps.lua")
-end)
+end, { desc = "Edit local keymaps" })
 keymap.set("n", "<leader>lp", function()
     vim.cmd("edit " .. vim.fn.stdpath("config") .. "/lua/sadirano/local/profiles.lua")
-end)
+end, { desc = "Edit local profiles" })
 
--- lsp restart
-keymap.set("n", "<leader>rs", ":LspRestart<CR>")
+keymap.set("n", "<leader>rs", ":LspRestart<CR>", { desc = "Restart LSP" })
