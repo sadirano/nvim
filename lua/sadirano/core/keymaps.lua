@@ -58,7 +58,7 @@ keymap.set("n", "<leader>bd", "<cmd>bd<CR>", { desc = "Close buffer" })
 -- Plugin Keybinds
 ----------------------
 
-keymap.set("n", "<leader>e", "<cmd>lua require('oil').open_float()<CR>", { desc = "File explorer" })
+keymap.set("n", "<leader>e", "<cmd>Oil<CR>", { desc = "File explorer" })
 
 -- telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
