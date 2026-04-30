@@ -20,6 +20,15 @@ return {
 
             telescope.setup({
                 defaults = {
+                    file_ignore_patterns = {
+                        "node_modules",
+                        "%.git/",
+                        "_build",
+                        "%.next",
+                        "dist/",
+                        "%.lock$",
+                        "%.min%.js$",
+                    },
                     mappings = {
                         i = {
                             ["<C-k>"] = actions.move_selection_previous,

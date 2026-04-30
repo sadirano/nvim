@@ -21,6 +21,7 @@ opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
 opt.scrolloff = 5
+opt.winborder = "rounded"
 
 -- backspace
 opt.backspace = "indent,eol,start"
