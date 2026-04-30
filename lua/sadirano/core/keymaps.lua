@@ -58,7 +58,9 @@ keymap.set("n", "<leader>bd", "<cmd>bd<CR>", { desc = "Close buffer" })
 -- Plugin Keybinds
 ----------------------
 
-keymap.set("n", "<leader>e", "<cmd>Oil<CR>", { desc = "File explorer" })
+keymap.set("n", "<leader>e", function()
+    require("oil").toggle_float()
+end, { desc = "File explorer" })
 
 -- telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
@@ -73,7 +75,12 @@ keymap.set("n", "<leader>gfc", "<cmd>Telescope git_bcommits<cr>", { desc = "File
 keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>", { desc = "Branches" })
 keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<cr>", { desc = "Status" })
 
-keymap.set({ "n", "v" }, "<M-S-f>", "<cmd>lua require('conform').format({ async = true })<CR>", { desc = "Format buffer" })
+keymap.set(
+    { "n", "v" },
+    "<M-S-f>",
+    "<cmd>lua require('conform').format({ async = true })<CR>",
+    { desc = "Format buffer" }
+)
 
 -- open local files
 keymap.set("n", "<leader>lk", function()
