@@ -17,18 +17,25 @@ return {
         "stevearc/oil.nvim",
         opts = {},
         -- optional dependencies
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+            {
+                "SirZenith/oil-vcs-status",
+                opts = {},
+            },
+        },
         config = function()
             require("oil").setup({
+                columns = {
+                    "icon",
+                    "size",
+                },
                 float = {
                     padding = 2,
-                    max_width = 0,
-                    max_height = 0,
+                    max_width = 0.8,
+                    max_height = 0.8,
                     border = "rounded",
                     win_options = { winblend = 0 },
-                    get_win_title = function(winid)
-                        return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":~") .. " "
-                    end,
                 },
                 keymaps = {
                     ["g?"] = "actions.show_help",
@@ -49,7 +56,6 @@ return {
                     ["gx"] = "actions.open_external",
                     ["g."] = "actions.toggle_hidden",
                 },
-                is_git_dirty = true,
                 use_default_keymaps = false,
             })
         end,

@@ -16,6 +16,7 @@ return {
             }
 
             local profile_parsers = {
+                sadirano = { "python", "go", "bash", "lua" },
                 web = { "javascript", "typescript", "html", "css" },
                 rust = { "rust" },
                 python = { "python" },

@@ -1,7 +1,8 @@
 local M = {}
 
--- Default profiles — override per-machine in lua/sadirano/local/profiles.lua
-M.active_profiles = { "web" }
+-- Profiles are empty by default. 
+-- Activate them by creating lua/sadirano/local/profiles.lua
+M.active_profiles = {}
 
 local ok, local_profiles = pcall(require, "sadirano.local.profiles")
 if ok and local_profiles.active_profiles then
@@ -28,6 +29,23 @@ local always_formatters = {
 local always_tools = { "xmlformatter", "sql-formatter", "prettier" }
 
 M.profiles = {
+    sadirano = {
+        lsp = { "pyright", "gopls", "lua_ls", "bashls" },
+        tools = { "pyright", "black", "gopls", "goimports", "lua_ls", "stylua", "bash-language-server" },
+        formatters = {
+            python = { "black" },
+            go = { "goimports" },
+            lua = { "stylua" },
+            sh = { "beautysh" },
+        },
+        linters = {},
+    },
+    editor = {
+        -- Enable gj/gk movement and other ergonomic tweaks
+    },
+    prose = {
+        -- Profile for writing markdown/text with spellcheck and wrap
+    },
     web = {
         lsp = { "ts_ls" },
         tools = { "ts_ls", "eslint_d" },
