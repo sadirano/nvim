@@ -1,8 +1,9 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        branch = "main",
         build = ":TSUpdate",
-        dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
+        lazy = false,
         config = function()
             local base_parsers = {
                 "json",
@@ -31,47 +32,63 @@ return {
                 end
             end
 
-            require("nvim-treesitter").setup({
-                ensure_installed = parsers,
-                auto_install = true,
-                highlight = { enable = true },
-                indent = { enable = true },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = "<C-space>",
-                        node_incremental = "<C-space>",
-                        scope_incremental = false,
-                        node_decremental = "<bs>",
-                    },
-                },
-                textobjects = {
-                    select = {
-                        enable = true,
-                        lookahead = true,
-                        keymaps = {
-                            ["af"] = "@function.outer",
-                            ["if"] = "@function.inner",
-                            ["ac"] = "@class.outer",
-                            ["ic"] = "@class.inner",
-                            ["aa"] = "@parameter.outer",
-                            ["ia"] = "@parameter.inner",
-                        },
-                    },
-                    move = {
-                        enable = true,
-                        set_jumps = true,
-                        goto_next_start = { ["]m"] = "@function.outer", ["]]"] = "@class.outer" },
-                        goto_next_end = { ["]M"] = "@function.outer", ["]["] = "@class.outer" },
-                        goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
-                        goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
-                    },
-                },
+            require("nvim-treesitter").install(parsers)
+
+            -- The main branch no longer enables features itself; start
+            -- highlighting and treesitter indent per buffer when a parser exists
+            vim.api.nvim_create_autocmd("FileType", {
+                callback = function(ev)
+                    local lang = vim.treesitter.language.get_lang(ev.match)
+                    if lang and pcall(vim.treesitter.start, ev.buf, lang) then
+                        vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    end
+                end,
             })
         end,
     },
     {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        branch = "main",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        config = function()
+            require("nvim-treesitter-textobjects").setup({
+                select = { lookahead = true },
+                move = { set_jumps = true },
+            })
+
+            local select = require("nvim-treesitter-textobjects.select")
+            local function sel(lhs, query)
+                vim.keymap.set({ "x", "o" }, lhs, function()
+                    select.select_textobject(query, "textobjects")
+                end, { desc = "Select " .. query })
+            end
+            sel("af", "@function.outer")
+            sel("if", "@function.inner")
+            sel("ac", "@class.outer")
+            sel("ic", "@class.inner")
+            sel("aa", "@parameter.outer")
+            sel("ia", "@parameter.inner")
+
+            local move = require("nvim-treesitter-textobjects.move")
+            local function mv(lhs, fn, query)
+                vim.keymap.set({ "n", "x", "o" }, lhs, function()
+                    move[fn](query, "textobjects")
+                end, { desc = query .. " (" .. fn .. ")" })
+            end
+            mv("]m", "goto_next_start", "@function.outer")
+            mv("]]", "goto_next_start", "@class.outer")
+            mv("]M", "goto_next_end", "@function.outer")
+            mv("][", "goto_next_end", "@class.outer")
+            mv("[m", "goto_previous_start", "@function.outer")
+            mv("[[", "goto_previous_start", "@class.outer")
+            mv("[M", "goto_previous_end", "@function.outer")
+            mv("[]", "goto_previous_end", "@class.outer")
+        end,
+    },
+    {
         "windwp/nvim-ts-autotag",
+        enabled = vim.tbl_contains(require("sadirano.core.languages").active_profiles, "web"),
+        event = "InsertEnter",
         config = true,
     },
 }

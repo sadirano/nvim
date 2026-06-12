@@ -15,8 +15,6 @@ vim.api.nvim_create_autocmd("filetype", {
 return {
     {
         "stevearc/oil.nvim",
-        opts = {},
-        -- optional dependencies
         dependencies = {
             "nvim-tree/nvim-web-devicons",
             {
@@ -28,7 +26,6 @@ return {
             require("oil").setup({
                 columns = {
                     "icon",
-                    "size",
                 },
                 float = {
                     padding = 2,
