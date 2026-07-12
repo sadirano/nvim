@@ -37,6 +37,8 @@ return {
             if has_compiler then
                 -- Force it to use gcc first on Windows, instead of defaulting to MSVC (cl.exe)
                 require("nvim-treesitter.install").compilers = { "gcc", "clang", "cl" }
+                -- Bypass the buggy tree-sitter CLI on Windows and compile directly from git sources
+                require("nvim-treesitter.install").prefer_git = true
                 require("nvim-treesitter").install(parsers)
             end
 
