@@ -32,7 +32,11 @@ return {
                 end
             end
 
-            require("nvim-treesitter").install(parsers)
+            -- Only auto-install parsers if a C compiler exists to avoid async build error spam
+            local has_compiler = vim.fn.executable("gcc") == 1 or vim.fn.executable("clang") == 1 or vim.fn.executable("cl") == 1
+            if has_compiler then
+                require("nvim-treesitter").install(parsers)
+            end
 
             -- The main branch no longer enables features itself; start
             -- highlighting and treesitter indent per buffer when a parser exists
