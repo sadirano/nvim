@@ -26,7 +26,10 @@ local always_formatters = {
     markdown = { "prettier" },
 }
 
-local always_tools = { "xmlformatter", "sql-formatter", "prettier" }
+local always_tools = { "sql-formatter", "prettier" }
+if vim.fn.executable("python") == 1 or vim.fn.executable("python3") == 1 then
+    table.insert(always_tools, "xmlformatter")
+end
 
 M.profiles = {
     sadirano = {
