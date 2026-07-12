@@ -1,7 +1,6 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
-        branch = "main",
         build = ":TSUpdate",
         lazy = false,
         config = function()
@@ -32,31 +31,20 @@ return {
                 end
             end
 
-            -- Only auto-install parsers if a C compiler exists to avoid async build error spam
             local has_compiler = vim.fn.executable("gcc") == 1 or vim.fn.executable("clang") == 1 or vim.fn.executable("cl") == 1
             if has_compiler then
-                -- Force it to use gcc first on Windows, instead of defaulting to MSVC (cl.exe)
                 require("nvim-treesitter.install").compilers = { "gcc", "clang", "cl" }
-                -- Bypass the buggy tree-sitter CLI on Windows and compile directly from git sources
                 require("nvim-treesitter.install").prefer_git = true
-                require("nvim-treesitter").install(parsers)
+                require("nvim-treesitter.configs").setup({
+                    ensure_installed = parsers,
+                    highlight = { enable = true },
+                    indent = { enable = true },
+                })
             end
-
-            -- The main branch no longer enables features itself; start
-            -- highlighting and treesitter indent per buffer when a parser exists
-            vim.api.nvim_create_autocmd("FileType", {
-                callback = function(ev)
-                    local lang = vim.treesitter.language.get_lang(ev.match)
-                    if lang and pcall(vim.treesitter.start, ev.buf, lang) then
-                        vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-                    end
-                end,
-            })
         end,
     },
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
-        branch = "main",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
         config = function()
             require("nvim-treesitter-textobjects").setup({
