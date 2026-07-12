@@ -40,6 +40,40 @@ return {
                     ensure_installed = parsers,
                     highlight = { enable = true },
                     indent = { enable = true },
+                    textobjects = {
+                        select = {
+                            enable = true,
+                            lookahead = true,
+                            keymaps = {
+                                ["af"] = "@function.outer",
+                                ["if"] = "@function.inner",
+                                ["ac"] = "@class.outer",
+                                ["ic"] = "@class.inner",
+                                ["aa"] = "@parameter.outer",
+                                ["ia"] = "@parameter.inner",
+                            },
+                        },
+                        move = {
+                            enable = true,
+                            set_jumps = true,
+                            goto_next_start = {
+                                ["]m"] = "@function.outer",
+                                ["]]"] = "@class.outer",
+                            },
+                            goto_next_end = {
+                                ["]M"] = "@function.outer",
+                                ["]["] = "@class.outer",
+                            },
+                            goto_previous_start = {
+                                ["[m"] = "@function.outer",
+                                ["[["] = "@class.outer",
+                            },
+                            goto_previous_end = {
+                                ["[M"] = "@function.outer",
+                                ["[]"] = "@class.outer",
+                            },
+                        },
+                    },
                 })
             end
         end,
@@ -48,40 +82,7 @@ return {
         "nvim-treesitter/nvim-treesitter-textobjects",
         branch = "master",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
-        config = function()
-            require("nvim-treesitter-textobjects").setup({
-                select = { lookahead = true },
-                move = { set_jumps = true },
-            })
-
-            local select = require("nvim-treesitter-textobjects.select")
-            local function sel(lhs, query)
-                vim.keymap.set({ "x", "o" }, lhs, function()
-                    select.select_textobject(query, "textobjects")
-                end, { desc = "Select " .. query })
-            end
-            sel("af", "@function.outer")
-            sel("if", "@function.inner")
-            sel("ac", "@class.outer")
-            sel("ic", "@class.inner")
-            sel("aa", "@parameter.outer")
-            sel("ia", "@parameter.inner")
-
-            local move = require("nvim-treesitter-textobjects.move")
-            local function mv(lhs, fn, query)
-                vim.keymap.set({ "n", "x", "o" }, lhs, function()
-                    move[fn](query, "textobjects")
-                end, { desc = query .. " (" .. fn .. ")" })
-            end
-            mv("]m", "goto_next_start", "@function.outer")
-            mv("]]", "goto_next_start", "@class.outer")
-            mv("]M", "goto_next_end", "@function.outer")
-            mv("][", "goto_next_end", "@class.outer")
-            mv("[m", "goto_previous_start", "@function.outer")
-            mv("[[", "goto_previous_start", "@class.outer")
-            mv("[M", "goto_previous_end", "@function.outer")
-            mv("[]", "goto_previous_end", "@class.outer")
-        end,
+        -- Configured entirely inside nvim-treesitter.configs.setup
     },
     {
         "windwp/nvim-ts-autotag",
