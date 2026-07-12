@@ -35,6 +35,8 @@ return {
             -- Only auto-install parsers if a C compiler exists to avoid async build error spam
             local has_compiler = vim.fn.executable("gcc") == 1 or vim.fn.executable("clang") == 1 or vim.fn.executable("cl") == 1
             if has_compiler then
+                -- Force it to use gcc first on Windows, instead of defaulting to MSVC (cl.exe)
+                require("nvim-treesitter.install").compilers = { "gcc", "clang", "cl" }
                 require("nvim-treesitter").install(parsers)
             end
 
